@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define the list of hosts to run the SAR command on
-hosts=()
+hosts=("x.x.x.x" "x.x.x.x" "x.x.x.x" "x.x.x.x")
 
 # Define the usernames for each host
-usernames=
+usernames=("user1" "user2" "user3" "user4")
 
 # Define the remote command to run SAR and collect data
 remote_cmd=$(cat << 'END_CMD'
