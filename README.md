@@ -181,3 +181,4 @@ Description : Clears cache, swap memory and frees up the port number.
     
 
 NOTE : For clearing swap space if the above code doesn’t work use the one used in the script above or try and locate the swap space location and use that instead of /var/swap
+NOTE : If the script shows usage of kill that means that it did not receive any pid to kill from the `lsof` command, which means that the port was already free. It is not an error.
