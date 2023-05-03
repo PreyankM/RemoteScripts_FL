@@ -20,7 +20,7 @@ stty echo
 puts ""
 
 foreach host $hosts username $usernames port $ports {
-  spawn ssh $username@$host "./Desktop/federated-learning-lib/clear_cache_port.sh ${port}"
+  spawn ssh $username@$host "./path/to/script/clear_cache_on_pi.sh ${port}"
   expect {
     "*password*" {
       send -- "$password\r"
