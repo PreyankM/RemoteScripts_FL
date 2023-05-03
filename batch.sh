@@ -1,4 +1,16 @@
 #!/bin/bash
+#Author - Preyank Mota
+
+expect /home/user/Desktop/federated-learning-lib/pi_cache_port.sh
+color='\033[1;31m' # set the color to bold red
+echo "";
+echo -e "${color}Cache and Port cleared on all Raspberry Pi's\033[0m" # print the message in bold red
+echo "";
+
+sudo bash /home/user/Desktop/federated-learning-lib/clear_cache_port.sh 5000
+echo "";
+echo -e "${color}Cache and Port cleared on this system\033[0m" # print the message in bold red
+echo "";
 
 # Define the list of hosts to run the SAR command on
 hosts=("x.x.x.x" "x.x.x.x" "x.x.x.x" "x.x.x.x")
@@ -15,11 +27,29 @@ wait
 END_CMD
 )
 
+#For different command
+remote_cmd2=$(cat << 'END_CMD'
+trap "exit" INT
+sar -u -r -d --dev=sda -n DEV --iface=enp2s0 -h 1 > "$USER-sar.txt" &
+echo "SAR data collection started on $HOSTNAME."
+wait
+END_CMD
+)
+
+# Wait for user input to start collecting data
+read -p "Press enter to start collecting SAR data."
+
 # Start collecting data on all hosts
 for ((i=0;i<${#hosts[@]};++i)); do
     host=${hosts[i]}
     username=${usernames[i]}
-    ssh "$username@$host" "$remote_cmd" >/dev/null 2>&1 &
+    if [ "$username" = "user" ]; then
+    # do this for a particular user
+      ssh "$username@$host" "$remote_cmd2" >/dev/null 2>&1 &
+    else
+    # do this for others
+      ssh "$username@$host" "$remote_cmd" >/dev/null 2>&1 &
+fi
 done
 
 # Start time of recording
@@ -51,7 +81,7 @@ for ((i=0;i<${#hosts[@]};++i)); do
     host=${hosts[i]}
     username=${usernames[i]}
    # ls -l
-   scp $username@$host:$username-sar.txt user@127.0.0.1:/path/to/storage-directory
+   scp $username@$host:$username-sar.txt user@127.0.0.1:/home/user/Downloads
    echo "";
     echo -e "SAR data file transferred from ${color1}${host}\033[0m."
     echo "";
