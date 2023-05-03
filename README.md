@@ -5,16 +5,16 @@ This script also clears cache and swap space remotely. It also clears process th
 - batch.sh  
 Usage : `./batch.sh`
 Description :
-    1. Activate pi_cache_port.sh (Asks for raspi password) - line 3
+    1. Activate clear_cache_all_pis.sh (Asks for raspi password) - line 3
     
     ```bash
-    expect /home/user/Desktop/federated-learning-lib/pi_cache_port.sh
+    expect /path/to/script/clear_cache_all_pis.sh
     ```
     
-    2. Activate clear_cache_port.sh on the aggregator(user@dashlab) (Asks for sudo password) - line 9
+    2. Activate clear_cache_on_agg.sh on the aggregator (Asks for sudo password) - line 9
     
     ```bash
-    sudo bash /home/user/Desktop/federated-learning-lib/clear_cache_port.sh 5000
+    sudo bash /path/to/script/clear_cache_on_agg.sh 5000
     ```
     
     3. Waits for Enter press before starting SAR commands on all mentioned hosts and ips - line 39
@@ -67,7 +67,7 @@ Description :
         host=${hosts[i]}
         username=${usernames[i]}
        # ls -l
-       scp $username@$host:$username-sar.txt user@127.0.0.1:/home/user/Downloads
+       scp $username@$host:$username-sar.txt user@127.0.0.1:/path/to/directory
     ```
     
     8. Pretty prints required avg parameters from the SAR files - line 91 
@@ -121,7 +121,7 @@ Description : This is not a shell script rather an expect script which allows to
     
     ```bash
     foreach host $hosts username $usernames port $ports {
-      spawn ssh $username@$host "./Desktop/federated-learning-lib/clear_cache_port.sh ${port}"
+      spawn ssh $username@$host "./path/to/script/clear_cache_on_pi.sh ${port}"
       expect {
         "*password*" {
           send -- "$password\r"
