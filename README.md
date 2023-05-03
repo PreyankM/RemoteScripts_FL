@@ -1,4 +1,4 @@
-# RemoteScripts_Batch
+# RemoteScripts_FL
 Using SSH to enable SAR command on remote devices and collecting output(in txt files). The files are stored in the path specified.
 This script also clears cache and swap space remotely. It also clears process that occupy a specific port number(as specified).
 This is a part of a project from DaSH Lab(BITS Goa).
